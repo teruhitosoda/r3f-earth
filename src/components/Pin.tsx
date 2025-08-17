@@ -1,9 +1,9 @@
 import * as THREE from "three";
-import * as React from "react";
+import type { ThreeElements } from "@react-three/fiber";
 import { useRef, useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 
-export default function Pin(props: React.JSX.IntrinsicElements["group"]) {
+export default function Pin(props: ThreeElements["group"]) {
   const { scene } = useGLTF("/models/pin.glb");
   const groupRef = useRef<THREE.Group>(null);
 

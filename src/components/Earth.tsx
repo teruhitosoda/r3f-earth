@@ -19,7 +19,7 @@ function latLonToVector3(lat: number, lon: number, radius: number): [number, num
 export default function Earth({ location }: { location: Coord | null }) {
   const { scene } = useGLTF("/models/earth.glb");
   const rotatingGroupRef = useRef<THREE.Group>(null);
-  const scale = 1;
+  const EARTH_RADIUS = 1;
   const tilt = -23.5 * (Math.PI / 180);
 
   useFrame((_, delta) => {
@@ -28,14 +28,16 @@ export default function Earth({ location }: { location: Coord | null }) {
     }
   });
 
-  const pinPosition = location ? latLonToVector3(location.lat, location.lon, scale) : [0, 0, 0];
+  const pinPosition: [number, number, number] = location
+    ? latLonToVector3(location.lat, location.lon, EARTH_RADIUS)
+    : [0, 0, 0];
 
   return (
     <group rotation={[0, 0, tilt]}>
       <group ref={rotatingGroupRef}>
         <primitive
           object={scene.clone()}
-          scale={scale}
+          scale={EARTH_RADIUS}
         />
         {location && <Pin position={pinPosition} />}
       </group>
